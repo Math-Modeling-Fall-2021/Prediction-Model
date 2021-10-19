@@ -130,3 +130,6 @@ dmypy.json
 
 *.xlsx
 *.csv
+*.spacy
+output/
+results*.json
