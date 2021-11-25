@@ -52,12 +52,25 @@ def main(argv):
         if score < 0:
             invalid += 1
             continue
-        elif score <= 0.5:
-            doc.cats["good"] = 0
-            doc.cats["bad"] = 1
-        elif score > 0.5:
-            doc.cats["good"] = 1
-            doc.cats["bad"] = 0
+        score = round(score * 5)
+        doc.cats["0"] = 0
+        doc.cats["1"] = 0
+        doc.cats["2"] = 0
+        doc.cats["3"] = 0
+        doc.cats["4"] = 0
+        doc.cats["5"] = 0
+        if score == 0:
+            doc.cats["0"] = 1
+        if score == 1:
+            doc.cats["1"] = 1
+        if score == 2:
+            doc.cats["2"] = 1
+        if score == 3:
+            doc.cats["3"] = 1
+        if score == 4:
+            doc.cats["4"] = 1
+        if score == 5:
+            doc.cats["5"] = 1
         db.add(doc)
     print("num invalid scores:", invalid)
     db.to_disk(output_path)

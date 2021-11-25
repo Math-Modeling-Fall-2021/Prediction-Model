@@ -133,3 +133,4 @@ dmypy.json
 *.spacy
 output/
 results*.json
+*.txt
