@@ -19,6 +19,7 @@ def main(argv):
         skips = 0
         i = 0
         correct = {"0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0}
+        preds = {"0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0}
         total = {"0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0}
         valid = 0
         nlp = spacy.load("output/model-last")
@@ -32,30 +33,10 @@ def main(argv):
                     content = rover[8]
                     prediction = nlp(content)
                     pred = int(max(prediction.cats, key=prediction.cats.get))
-                    if actual_score == pred and actual_score == 0:
-                        correct["0"] += 1
-                    if actual_score == pred and actual_score == 1:
-                        correct["1"] += 1
-                    if actual_score == pred and actual_score == 2:
-                        correct["2"] += 1
-                    if actual_score == pred and actual_score == 3:
-                        correct["3"] += 1
-                    if actual_score == pred and actual_score == 4:
-                        correct["4"] += 1
-                    if actual_score == pred and actual_score == 5:
-                        correct["5"] += 1
-                    if actual_score == 0:
-                        total["0"] += 1
-                    if actual_score == 1:
-                        total["1"] += 1
-                    if actual_score == 2:
-                        total["2"] += 1
-                    if actual_score == 3:
-                        total["3"] += 1
-                    if actual_score == 4:
-                        total["4"] += 1
-                    if actual_score == 5:
-                        total["5"] += 1
+                    preds[str(pred)] += 1
+                    if abs(actual_score - pred) <= 0:
+                        correct[str(actual_score)] += 1
+                    total[str(actual_score)] += 1
                     #print(f"valid: {valid}, correct: {correct}")
             except UnicodeDecodeError:
                 skips += 1
@@ -75,6 +56,9 @@ def main(argv):
     for label in correct:
         num_valid += total[label]
 
+    print("correct:", correct)
+    print("preds:", preds)
+    print("total:", total)
 
     print(f"number of guesses correct: {num_correct} out of {num_valid} ({num_correct / num_valid}%)")
 
