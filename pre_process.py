@@ -53,8 +53,12 @@ def main(argv):
             invalid += 1
             continue
         score = round(score * 5)
-        for i in range(0,6):
-            doc.cats[str(i)] = 0
+        doc.cats["0"] = 0
+        doc.cats["1"] = 0
+        doc.cats["2"] = 0
+        doc.cats["3"] = 0
+        doc.cats["4"] = 0
+        doc.cats["5"] = 0
         doc.cats[str(score)] = 1
         db.add(doc)
     print("num invalid scores:", invalid)
