@@ -53,14 +53,15 @@ def main(argv):
             invalid += 1
             continue
         score = round(score * 5)
-        doc.cats["0"] = 0
-        doc.cats["1"] = 0
-        doc.cats["2"] = 0
-        doc.cats["3"] = 0
-        doc.cats["4"] = 0
-        doc.cats["5"] = 0
-        doc.cats[str(score)] = 1
-        db.add(doc)
+        if score <= 5:
+            doc.cats["0"] = 0
+            doc.cats["1"] = 0
+            doc.cats["2"] = 0
+            doc.cats["3"] = 0
+            doc.cats["4"] = 0
+            doc.cats["5"] = 0
+            doc.cats[str(score)] = 1
+            db.add(doc)
     print("num invalid scores:", invalid)
     db.to_disk(output_path)
     print(f"Processed {len(db)} documents: {output_path}")

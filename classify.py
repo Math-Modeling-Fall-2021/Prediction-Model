@@ -36,9 +36,10 @@ def main(argv):
                     pred = int(max(prediction.cats, key=prediction.cats.get))
                     if pred > 5:
                         bad += 1
+                        print(prediction.cats)
                         continue
                     preds[str(pred)] += 1
-                    if abs(actual_score - pred) <= 0:
+                    if abs(actual_score - pred) <= 0 or abs(actual_score - pred2):
                         correct[str(actual_score)] += 1
                     total[str(actual_score)] += 1
                     #print(f"valid: {valid}, correct: {correct}")
@@ -75,8 +76,3 @@ def main(argv):
 
 if __name__ == "__main__":
     main(sys.argv[1:])
-
-
-# abs_error = lambda y_approx, y_analytical: np.sum(np.abs(y_approx - y_analytical))
-# relative_error = lambda y_approx, y_analytical: np.sum(np.abs((y_approx - y_analytical)/y_analytical))
-# rmse = lambda y_approx, y_analytical: np.sqrt(np.sum((y_approx - y_analytical)**2)/len(y_approx))
