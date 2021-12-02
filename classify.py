@@ -39,7 +39,7 @@ def main(argv):
                         print(prediction.cats)
                         continue
                     preds[str(pred)] += 1
-                    if abs(actual_score - pred) <= 0 or abs(actual_score - pred2):
+                    if abs(actual_score - pred) <= 0:
                         correct[str(actual_score)] += 1
                     total[str(actual_score)] += 1
                     #print(f"valid: {valid}, correct: {correct}")
@@ -61,15 +61,17 @@ def main(argv):
     for label in correct:
         num_valid += total[label]
     num_incorrect = num_valid - num_correct
-    precision = ((num_correct * 6) + (num_incorrect * 4)) / (num_valid * 6)
-    recall = ((num_correct * 6) + (num_incorrect * 4)) / (num_valid * 6)
+    accuracy = (num_correct * 6 + num_incorrect * 4) / (num_valid * 6)
+    precision = (num_correct * 6) / (num_correct * 6 + num_incorrect)
+    recall = (num_correct * 6) / (num_correct * 6 + num_incorrect)
     f_score = (2 * precision * recall) / (precision + recall)
 
     print("correct:", correct)
     print("preds:", preds)
     print("total:", total)
 
-    print(f"number of guesses correct: {num_correct} out of {num_valid} (accuracy={num_correct / num_valid}%)")
+    print(f"number of guesses correct: {num_correct} out of {num_valid} (frac={num_correct / num_valid}%)")
+    print(f"accuracy={accuracy}")
     print(f"precision={precision}")
     print(f"recall={recall}")
     print(f"f_1 score={f_score}")
